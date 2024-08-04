@@ -1,0 +1,25 @@
+module data_bus_conversion_tb();
+    
+    reg i_clk, i_rst, i_data_valid;
+    reg [23:0] i_data_in;
+    
+    wire [7:0] o_data_out;
+    wire o_data_valid;
+    
+    data_bus_conversion u1 (i_clk, i_rst, i_data_valid, i_data_in, o_data_out, o_data_valid);
+    
+    initial begin
+        i_clk = 1'b0;
+        i_rst = 1'b0;
+        i_data_valid = 1'b0;
+        #20 i_rst = 1'b1;
+        #10 i_data_valid = 1'b1;
+        i_data_in = 24'h8A004B;
+        #10 i_data_valid = 1'b0;
+        i_data_in = 'h0;
+        #100 $finish;
+    end 
+
+    always #5 i_clk=~i_clk;
+
+endmodule
